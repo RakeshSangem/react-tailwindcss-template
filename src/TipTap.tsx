@@ -12,8 +12,7 @@ import { DustBin } from "./DustBin.tsx";
 
 const extensions: AnyExtension[] = [StarterKit, FloatingMenu, Underline];
 
-const content = "<p>Hello World!</p>";
-
+const content = `<p><strong>TipTap</strong> is a headless editor framework for web applications.</p>`;
 interface Props {
   setIsDraggable?: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -31,15 +30,15 @@ export default function TipTap({ setIsDraggable }: Props): ReactNode {
   });
 
   editor?.on("focus", () => {
-    setIsDraggable(false);
+    setIsDraggable && setIsDraggable(false);
   });
 
   editor?.on("blur", () => {
-    setIsDraggable(true);
+    setIsDraggable && setIsDraggable(true);
   });
 
   return (
-    <div className="w-full h-full border rounded-3xl p-3 bg-white">
+    <div className="w-full h-full rounded-3xl p-3 bg-white">
       <div
         className={`h-full w-full rounded-xl relative ${
           editor?.isFocused ? "bg-gray-200" : ""

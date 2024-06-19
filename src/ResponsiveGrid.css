@@ -1,0 +1,6 @@
+.react-grid-item.react-grid-placeholder {
+  background: #c0c0c0 !important;
+  border-radius: 1.5rem;
+  z-index: 2;
+  box-shadow: inset 0 0 10px 10px #858585;
+}

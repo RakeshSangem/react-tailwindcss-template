@@ -13,7 +13,12 @@ textarea::placeholder {
   .bn-inline-content:has(> .ProseMirror-trailingBreak:only-child)::before {
   content: "Add note" !important;
   font-style: normal;
+  font-size: 1.5rem;
 }
+.ProseMirror {
+  font-size: 1.25rem;
+}
+
 .bn-container[data-color-scheme="light"] {
   --bn-colors-editor-background: transparent;
 }
@@ -302,6 +307,9 @@ textarea::placeholder {
   opacity: 1;
 }
 
+.react-grid-item .react-grid-placeholder {
+  background-color: red !important; /* Set background to transparent */
+}
 .react-grid-item .react-resizable-handle::after {
   content: "";
   position: absolute;
