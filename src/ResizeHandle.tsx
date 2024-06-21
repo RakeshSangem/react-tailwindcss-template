@@ -6,10 +6,6 @@ const ResizeHandle = React.forwardRef<
 >((props, ref) => {
   const { handleAxis, ...restProps } = props;
 
-  console.log({
-    handleAxis,
-    restProps,
-  });
   return (
     <div
       ref={ref}

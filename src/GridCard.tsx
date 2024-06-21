@@ -5,5 +5,5 @@ type Props = {
 };
 
 export default function GridCard({ children }: Props) {
-  return <article className="border rounded-2xl">{children}</article>;
+  return <article className="">{children}</article>;
 }

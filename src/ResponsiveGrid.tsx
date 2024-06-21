@@ -1,12 +1,17 @@
-import { useState } from "react";
-// import { Responsive, WidthProvider } from "react-grid-layout";
-import GridLayout from "react-grid-layout";
+import React, { useRef, useState } from "react";
+import {
+  Responsive,
+  WidthProvider,
+  ResponsiveGridLayoutProps,
+} from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import TipTap from "./TipTap";
+import GridItemToolbar from "./GridItemToolbar";
 import { lgLayout, mdLayout, smLayout } from "./config";
+import GridItem from "./components/Grid/GridItem";
 
-// const GridLayout = WidthProvider(Responsive);
+const GridLayout = WidthProvider(Responsive);
 
 const ImageComponent = ({ src }: { src: string }) => (
   <div className="object-cover overflow-hidden h-full">
@@ -24,47 +29,22 @@ const TextComponent = ({ text }: { text: string }) => (
   </div>
 );
 
-const SocialCardComponent = (item: LItem) => {
+const SocialCardComponent = (item: any) => {
   console.log(item);
 
   return (
-    <article className="flex rounded-2xl h-full border border-gray-200 bg-white p-6 shadow-md sm:flex-row flex-col gap-20 transition-all duration-700 ease-in-out">
-      <div className="w-full h-full flex flex-col">
-        <div className="">
-          <svg
-            className="size-10"
-            width="1.2rem"
-            height="1.2rem"
-            viewBox="0 0 256 256"
-          >
-            <g fill="none">
-              <rect width="256" height="256" fill="#242938" rx="60" />
-              <path
-                fill="#fff"
-                d="M128.001 30C72.779 30 28 74.77 28 130.001c0 44.183 28.653 81.667 68.387 94.89c4.997.926 6.832-2.169 6.832-4.81c0-2.385-.093-10.262-.136-18.618c-27.82 6.049-33.69-11.799-33.69-11.799c-4.55-11.559-11.104-14.632-11.104-14.632c-9.073-6.207.684-6.079.684-6.079c10.042.705 15.33 10.305 15.33 10.305c8.919 15.288 23.394 10.868 29.1 8.313c.898-6.464 3.489-10.875 6.349-13.372c-22.211-2.529-45.56-11.104-45.56-49.421c0-10.918 3.906-19.839 10.303-26.842c-1.039-2.519-4.462-12.69.968-26.464c0 0 8.398-2.687 27.508 10.25c7.977-2.215 16.531-3.326 25.03-3.364c8.498.038 17.06 1.149 25.051 3.365c19.087-12.939 27.473-10.25 27.473-10.25c5.443 13.773 2.019 23.945.98 26.463c6.412 7.003 10.292 15.924 10.292 26.842c0 38.409-23.394 46.866-45.662 49.341c3.587 3.104 6.783 9.189 6.783 18.519c0 13.38-.116 24.149-.116 27.443c0 2.661 1.8 5.779 6.869 4.797C199.383 211.64 228 174.169 228 130.001C228 74.771 183.227 30 128.001 30M65.454 172.453c-.22.497-1.002.646-1.714.305c-.726-.326-1.133-1.004-.898-1.502c.215-.512.999-.654 1.722-.311c.727.326 1.141 1.01.89 1.508m4.919 4.389c-.477.443-1.41.237-2.042-.462c-.654-.697-.777-1.629-.293-2.078c.491-.442 1.396-.235 2.051.462c.654.706.782 1.631.284 2.078m3.374 5.616c-.613.426-1.615.027-2.234-.863c-.613-.889-.613-1.955.013-2.383c.621-.427 1.608-.043 2.236.84c.611.904.611 1.971-.015 2.406m5.707 6.504c-.548.604-1.715.442-2.57-.383c-.874-.806-1.118-1.95-.568-2.555c.555-.606 1.729-.435 2.59.383c.868.804 1.133 1.957.548 2.555m7.376 2.195c-.242.784-1.366 1.14-2.499.807c-1.13-.343-1.871-1.26-1.642-2.052c.235-.788 1.364-1.159 2.505-.803c1.13.341 1.871 1.252 1.636 2.048m8.394.932c.028.824-.932 1.508-2.121 1.523c-1.196.027-2.163-.641-2.176-1.452c0-.833.939-1.51 2.134-1.53c1.19-.023 2.163.639 2.163 1.459m8.246-.316c.143.804-.683 1.631-1.864 1.851c-1.161.212-2.236-.285-2.383-1.083c-.144-.825.697-1.651 1.856-1.865c1.183-.205 2.241.279 2.391 1.097"
-              />
-            </g>
-          </svg>
-        </div>
-        <div className="flex-1">
-          <h3 className="mt-2 font-normal text-black/70">Rakesh Sangem</h3>
-        </div>
-        <div className="justify-self-end sm:mt-3 mt-3">
-          <button className="rounded-md bg-gray-50 px-4 py-1 border border-gray-300 text-gray-600 font-semibold">
-            Follow
-          </button>
-        </div>
-      </div>
-      <div className="w-full flex justify-end items-center">
-        <div className="grid grid-cols-7 gap-2">
-          {Array.from({ length: 38 }).map((_, i) => (
-            <div key={i} className="size-3 rounded-[3px] bg-green-300"></div>
-          ))}
-        </div>
-      </div>
+    <article className="flex rounded-2xl h-full border border-gray-200 bg-white p-6 shadow-md sm:flex-row flex-col gap-20 transition-all duration-700 ease-in-out relative">
+      <GridItemToolbar
+        onIncreaseWidth={() => console.log("Increase width")}
+        onDecreaseWidth={() => console.log("Decrease width")}
+        onIncreaseHeight={() => console.log("Increase height")}
+        onDecreaseHeight={() => console.log("Decrease height")}
+      />
+      {/* Your social card component JSX */}
     </article>
   );
 };
+
 const components = [
   { type: "TipTap", component: TipTap },
   { type: "ImageComponent", component: ImageComponent },
@@ -79,83 +59,183 @@ const breakpoints = {
   xxs: 0,
 };
 
-const layoutConfig = [
+const initialLayoutConfig = [
   {
     i: "item1",
     x: 0,
     y: 0,
-    w: 1,
+    w: 4,
     h: 1,
-    minH: 0.5,
+
     type: "SocialCardComponent",
   },
+  {
+    i: "item2",
+    x: 1,
+    y: 0,
+    w: 1,
+    h: 1,
+    minW: 1,
+    minH: 1,
+    type: "ImageComponent",
+    src: "https://source.unsplash.com/random",
+  },
+  {
+    i: "item3",
+    x: 2,
+    y: 0,
+    w: 2,
+    h: 0.5,
+    minW: 2,
+    minH: 0.5,
+    type: "TextComponent",
+    text: "Hello World",
+  },
+  {
+    i: "item4",
+    x: 3,
+    y: 0,
+    w: 2,
+    h: 0.5,
+    minW: 2,
+    minH: 0.5,
+    type: "TipTap",
+  },
+  {
+    i: "item5",
+    x: 0,
+    y: 1,
+    w: 1,
+    h: 1,
+    minW: 1,
+    minH: 1,
+    type: "SocialCardComponent",
+  },
+  {
+    i: "item6",
+    x: 1,
+    y: 1,
+    w: 1,
+    h: 1,
+    minW: 1,
+    minH: 1,
+    type: "ImageComponent",
+    src: "https://source.unsplash.com/random",
+  },
+  {
+    i: "item7",
+    x: 2,
+    y: 1,
+    w: 1,
+    h: 1,
+    minW: 1,
+    minH: 1,
+    type: "TextComponent",
+    text: "Hello World",
+  },
+  {
+    i: "item8",
+    x: 3,
+    y: 1,
+    w: 2,
+    h: 2,
+    minW: 2,
+    minH: 0.5,
+    type: "TipTap",
+  },
 ];
+
 const ResponsiveGrid = () => {
-  const [rowHeight, setRowHeight] = useState(85);
   const [isDraggable, setIsDraggable] = useState(true);
-  const [layout, setLayout] = useState(layoutConfig);
+  const [layout, setLayout] = useState(initialLayoutConfig);
 
-  const breakpoints = {
-    lg: 1200,
-    md: 1024,
-    sm: 768,
-  };
+  const gridRef = useRef<GridLayout>(null);
 
-  const onDropHandler = (layout, layoutItem) => {
+  const onDropHandler = (layout: any, layoutItem: any) => {
     layoutItem.i = `item${layout.length + 1}`;
     layoutItem.w = 2;
     layoutItem.h = 3;
     layoutItem.x = 0;
     layoutItem.y = Infinity;
-    // setLayout((prevLayout) => [...prevLayout, layoutItem]);
+    setLayout((prevLayout) => [...prevLayout, layoutItem]);
+  };
+
+  const calculateRowHeight = () => {
+    const width = window.innerWidth;
+
+    if (width >= breakpoints.lg) {
+      return 1200 / 8; // Assuming 8 columns at lg breakpoint
+    } else if (width >= breakpoints.md) {
+      return 1200 / 4; // Assuming 4 columns at md breakpoint
+    } else {
+      return 1200 / 2; // Assuming 2 columns at sm breakpoint
+    }
   };
 
   const renderComponent = (item) => {
-    const component = components.find((c) => c.type === item.type);
+    console.log(item);
+    const component = components.find((c) => c?.type === item?.type);
     if (!component) return <span>Unknown component</span>;
     return <component.component {...item} />;
   };
 
-  const columnsAtBreakPoint = { lg: 8, md: 4, sm: 2 };
+  const handleLayoutChange = (updatedLayout: any) => {
+    setLayout(
+      updatedLayout.map((item: any) => ({
+        ...item,
+        w: item.w,
+        h: item.h,
+      }))
+    );
+  };
+
+  const columnsAtBreakPoint = { lg: 8, md: 4, sm: 2, xs: 1, xxs: 1 };
 
   return (
     <section className="flex min-h-screen">
-      <div className="w-60 bg-slate-50 border-r min-h-screen p-2">
+      <div className="w-60 bg-gray-200 border-r min-h-screen p-2">
         <div
           draggable
-          onDrop={(e) => console.log("onDrop", e)}
+          onDragStart={() => setIsDraggable(false)}
+          onDragEnd={() => setIsDraggable(true)}
           className="w-full p-4 border rounded-md bg-white shadow-sm"
         >
           <h3 className="text-xl font-semibold">Note</h3>
         </div>
       </div>
-      <section className="min-h-screen flex-1">
+      <section className="min-h-screen flex-1 relative">
         <div className="absolute h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
         <GridLayout
-          className="bg-blue-500"
-          layout={layoutConfig}
-          // layouts={{
-          //   lg: lgLayout,
-          //   md: mdLayout,
-          //   sm: smLayout,
-          // }}
-          // breakpoints={breakpoints}
-          cols={8}
-          rowHeight={1024 / 8}
-          isDroppable={true}
+          ref={gridRef}
+          className=""
+          layouts={{
+            lg: lgLayout,
+            md: mdLayout,
+            sm: smLayout,
+          }}
+          breakpoints={breakpoints}
+          cols={columnsAtBreakPoint}
+          rowHeight={calculateRowHeight()}
+          isDraggable={isDraggable}
           onDrop={onDropHandler}
-          allowOverlap={false}
-          margin={[0, 0]}
+          onLayoutChange={handleLayoutChange}
+          margin={[10, 10]}
+          compactType={"horizontal"}
+          width={1200}
+          autoSize={true}
         >
-          {layout.map((item) => (
-            <div
-              key={item.i}
-              className="border bg-white shadow-md overflow-hidden rounded-2xl"
-              data-grid={item}
-            >
-              {renderComponent(item)}
-            </div>
-          ))}
+          {layout.map((item) => {
+            return (
+              <GridItem
+                key={item.i}
+                item={item}
+                ref={gridRef}
+                className="bg-white shadow-md rounded-2xl overflow-hidden"
+              >
+                {renderComponent(item.type)}
+              </GridItem>
+            );
+          })}
         </GridLayout>
       </section>
     </section>
